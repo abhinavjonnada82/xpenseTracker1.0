@@ -14,9 +14,11 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
-def checkOptionEntered(actionOption,nameUser, valueKind):
+def checkOptionEntered(actionOption,nameUser):
 
     if (actionOption == 'Add'):
+        print(""" School, DailyExpenses, Food, Party, MISC """)
+        valueKind = input("Please enter your expense kind \n")
         expenseDate = input("Enter Date: \n")
         expenseReason = input("Enter your expense: \n")
         expenseprice = input("Enter Price: $ \n")
@@ -29,6 +31,12 @@ def checkOptionEntered(actionOption,nameUser, valueKind):
             "notesIfAny": expensenotes
         }
         db.child("users").child(nameUser).child(valueKind).set(data)
+
+    if (actionOption == 'View'):
+        valueKind = "Food"
+        user = db.child("users").child(nameUser).child(valueKind).get()
+        print(user.key())
+
 
 
 def menuHandler(optionsList):
@@ -47,17 +55,14 @@ def menuHandler(optionsList):
         if user:
             value = auth.get_account_info(user['idToken'])
             temp = value['users'][0]['email']
-            print ("Hello {}".format(temp))
             tmp = temp.split('@')
             nameUser = tmp[0]
-            print(nameUser)
-            print(""" School, DailyExpenses, Food, Party, MISC """)
-            valueKind = input("Please enter your expense kind \n")
+            print("Hello {}".format(nameUser))
 
             print ("""1.) Add your expenses: Add 2.) Delete your expenses: Delete
                       3.) Update your expenses: Update 4.) View your overall expenses: View """)
             actionOption = input("Enter your choice of entry: ")
-            checkOptionEntered(actionOption,nameUser, valueKind)
+            checkOptionEntered(actionOption,nameUser)
 
 
     if (optionsHolder == "Login"):
