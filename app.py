@@ -12,39 +12,78 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
+db = firebase.database()
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-p', dest = "optionsAvail", nargs = '*',
-                            help='''Options available: 1.) Login 2.) SignUp
-                        3.) Forgot Password''')
+def checkOptionEntered(actionOption,nameUser, valueKind):
 
-args = parser.parse_args()
-optionsList = args.optionsAvail
-optionsHolder = optionsList.pop(0)
+    if (actionOption == 'Add'):
+        expenseDate = input("Enter Date: \n")
+        expenseReason = input("Enter your expense: \n")
+        expenseprice = input("Enter Price: $ \n")
+        expensenotes = input("Enter any notes: \n")
 
-def emailEntry():
-    email = input("Please enter your email \n")
-    return email
+        data = {
+            "Date": expenseDate,
+            "ExpenseType": expenseReason,
+            "ExpensePrice": expenseprice,
+            "notesIfAny": expensenotes
+        }
+        db.child("users").child(nameUser).child(valueKind).set(data)
 
-def passwordEntry():
-    password = input("Please enter your password \n")
-    return password
+
+def menuHandler(optionsList):
+    optionsHolder = optionsList.pop(0)
+
+    def emailEntry():
+        email = input("Please enter your email: \n")
+        return email
+
+    def passwordEntry():
+        password = input("Please enter your password: \n")
+        return password
 
 
-if (optionsHolder == "Login"):
-    email = emailEntry()
-    password = passwordEntry()
-    user = auth.sign_in_with_email_and_password(email, password)
-    letUserIn(user)
+    def letUserIn(user):
+        if user:
+            value = auth.get_account_info(user['idToken'])
+            temp = value['users'][0]['email']
+            print ("Hello {}".format(temp))
+            tmp = temp.split('@')
+            nameUser = tmp[0]
+            print(nameUser)
+            print(""" School, DailyExpenses, Food, Party, MISC """)
+            valueKind = input("Please enter your expense kind \n")
 
-elif (optionsHolder == "SignUp"):
-    email = emailEntry()
-    password = passwordEntry()
-    user = auth.create_user_with_email_and_password(email, password)
-    print('Please verify your email & then get started by running python3 app.py Login')
+            print ("""1.) Add your expenses: Add 2.) Delete your expenses: Delete
+                      3.) Update your expenses: Update 4.) View your overall expenses: View """)
+            actionOption = input("Enter your choice of entry: ")
+            checkOptionEntered(actionOption,nameUser, valueKind)
 
-elif (optionsHolder == "ForgotPassword"):
-    email = input("Please enter your email \n")
-    user = auth.send_password_reset_email(email)
-    print("Check your email!")
 
+    if (optionsHolder == "Login"):
+        email = emailEntry()
+        password = passwordEntry()
+        user = auth.sign_in_with_email_and_password(email, password)
+        letUserIn(user)
+
+    elif (optionsHolder == "SignUp"):
+        email = emailEntry()
+        password = passwordEntry()
+        user = auth.create_user_with_email_and_password(email, password)
+        print('Please verify your email & then get started by running python3 app.py Login')
+
+    elif (optionsHolder == "ForgotPassword"):
+        email = input("Please enter your email \n")
+        user = auth.send_password_reset_email(email)
+        print("Check your email!")
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', dest="optionsAvail", nargs='*',
+                        help='''Options available: 1.) Login 2.) SignUp
+                            3.) Forgot Password''')
+
+    args = parser.parse_args()
+    optionsList = args.optionsAvail
+    menuHandler(optionsList)
