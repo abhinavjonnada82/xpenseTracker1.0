@@ -1,6 +1,7 @@
 import pyrebase
 import argparse
 from random import randint
+from collections import deque
 
 config = {
     "apiKey": "AIzaSyBNn3_RxQr_B2ZvsvxZuMRAuaSoI0__HUg",
@@ -18,8 +19,6 @@ db = firebase.database()
 def checkOptionEntered(actionOption,nameUser):
 
     if (actionOption == 'Add'):
-        print(""" School, DailyExpenses, Food, Party, MISC """)
-        valueKind = input("Please enter your expense kind \n")
         expenseDate = input("Enter Date: \n")
         expenseReason = input("Enter your expense: \n")
         expenseprice = input("Enter Price: $ \n")
@@ -31,22 +30,29 @@ def checkOptionEntered(actionOption,nameUser):
             "ExpensePrice": expenseprice,
             "notesIfAny": expensenotes
         }
-        db.child("users").child(nameUser).child(randomToken).child(valueKind).set(data)
+        db.child("users").child(nameUser).push(data)
 
     if (actionOption == 'View'):
-        # all_user = db.child("users").child(nameUser).child("randomToken").child("valueKind").get()
-        # for user in all_user.each():
-        #     print(all_user.key())
 
-        all_user = db.child("users").child(nameUser).child("536").get()
-        print(all_user.key())
-        print(all_user.val())
+        fruits = []
+        all_user = db.child("users").child(nameUser).get()
+        # print(all_user.key())
+        dictKey = all_user.val()
+        print(dictKey) #prints out the whole key value dict
+        for k, v in dictKey.items():
+            #print ('  {}'.format( v))
+            for ke, va in v.items():
+                print( '{}'.format(va))
+                fruits.append(va)
 
-        #
-        # for userid in all_user.shallow().get().each():
-        #     expenseDB = all_user.child(userid).child("536").get()
-        #     print(expenseDB.val())
+        print (fruits)
 
+
+
+#Query to extract ExpensePrice
+        # snapshot = all_user.order_by_key().get()
+        # for user in snapshot:
+        #     print (user.val()) #object not iterable
 
 
 
