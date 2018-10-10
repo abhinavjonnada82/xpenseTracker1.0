@@ -1,5 +1,6 @@
 import pyrebase
 import argparse
+from random import randint
 
 config = {
     "apiKey": "AIzaSyBNn3_RxQr_B2ZvsvxZuMRAuaSoI0__HUg",
@@ -30,12 +31,22 @@ def checkOptionEntered(actionOption,nameUser):
             "ExpensePrice": expenseprice,
             "notesIfAny": expensenotes
         }
-        db.child("users").child(nameUser).child(valueKind).set(data)
+        db.child("users").child(nameUser).child(randomToken).child(valueKind).set(data)
 
     if (actionOption == 'View'):
-        valueKind = "Food"
-        user = db.child("users").child(nameUser).child(valueKind).get()
-        print(user.key())
+        # all_user = db.child("users").child(nameUser).child("randomToken").child("valueKind").get()
+        # for user in all_user.each():
+        #     print(all_user.key())
+
+        all_user = db.child("users").child(nameUser).child("536").get()
+        print(all_user.key())
+        print(all_user.val())
+
+        #
+        # for userid in all_user.shallow().get().each():
+        #     expenseDB = all_user.child(userid).child("536").get()
+        #     print(expenseDB.val())
+
 
 
 
