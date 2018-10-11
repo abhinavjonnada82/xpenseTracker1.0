@@ -16,7 +16,17 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
-def checkOptionEntered(actionOption,nameUser):
+
+def responseHolderfun(actionOption, nameUser, user):
+    responseHolder = input("Do you want to add more items? Y/N ")
+    while True:
+        if (responseHolder == ('Y' or 'y')):
+            checkOptionEntered(actionOption, nameUser, user)
+        else:
+            break
+    letUserIn(user)
+
+def checkOptionEntered(actionOption,nameUser, user):
 
     if (actionOption == 'Add'):
         expenseDate = input("Enter Date: \n")
@@ -32,6 +42,8 @@ def checkOptionEntered(actionOption,nameUser):
         }
         db.child("users").child(nameUser).push(data)
 
+        responseHolderfun(actionOption, nameUser, user)
+
     if (actionOption == 'View'):
 
         fruits = []
@@ -42,10 +54,21 @@ def checkOptionEntered(actionOption,nameUser):
         for k, v in dictKey.items():
             #print ('  {}'.format( v))
             for ke, va in v.items():
-                print( '{}'.format(va))
+                print( '{} : {}'.format(ke, va))
                 fruits.append(va)
+            print ('------------------------')
+        responseHolderfun(actionOption, nameUser, user)
 
-        print (fruits)
+    if (actionOption == 'Update'):
+        #db.child("users").child(nameUser).update({"ExpenseType": "carrot" })
+        print("Still working on the functionality !!!")
+
+    if (actionOption == 'Delete'):
+        #db.child("users").child(nameUser).remove()
+        print("Still working on the functionality !!!")
+
+    if (actionOption == 'Logout'):
+        print ("Bye....... see you soon! :) ")
 
 
 
@@ -54,6 +77,19 @@ def checkOptionEntered(actionOption,nameUser):
         # for user in snapshot:
         #     print (user.val()) #object not iterable
 
+
+def letUserIn(user):
+    if user:
+        value = auth.get_account_info(user['idToken'])
+        temp = value['users'][0]['email']
+        tmp = temp.split('@')
+        nameUser = tmp[0]
+        print("Hello {}".format(nameUser))
+
+        print ("""1.) Add your expenses: Add 2.) Delete your expenses: Delete
+                  3.) Update your expenses: Update 4.) View your overall expenses: View 5.) Exit application: Logout """)
+        actionOption = input("Enter your choice of entry: ")
+        checkOptionEntered(actionOption,nameUser, user)
 
 
 def menuHandler(optionsList):
@@ -66,21 +102,6 @@ def menuHandler(optionsList):
     def passwordEntry():
         password = input("Please enter your password: \n")
         return password
-
-
-    def letUserIn(user):
-        if user:
-            value = auth.get_account_info(user['idToken'])
-            temp = value['users'][0]['email']
-            tmp = temp.split('@')
-            nameUser = tmp[0]
-            print("Hello {}".format(nameUser))
-
-            print ("""1.) Add your expenses: Add 2.) Delete your expenses: Delete
-                      3.) Update your expenses: Update 4.) View your overall expenses: View """)
-            actionOption = input("Enter your choice of entry: ")
-            checkOptionEntered(actionOption,nameUser)
-
 
     if (optionsHolder == "Login"):
         email = emailEntry()
