@@ -1,7 +1,6 @@
 import pyrebase
 import argparse
-from random import randint
-from collections import deque
+import smtplib
 
 config = {
     "apiKey": "AIzaSyBNn3_RxQr_B2ZvsvxZuMRAuaSoI0__HUg",
@@ -16,9 +15,14 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
+def openFile():
+    f=open("data.txt", "r", encoding="utf-8")
+    if f.mode=='r':
+        contents = f.read()
+        return contents
 
 def responseHolderfun(actionOption, nameUser, user):
-    responseHolder = input("Do you want to add more items? Y/N ")
+    responseHolder = input("Do you want to {} once more? Y/N ".format(actionOption))
     while True:
         if (responseHolder == ('Y' or 'y')):
             checkOptionEntered(actionOption, nameUser, user)
@@ -47,16 +51,39 @@ def checkOptionEntered(actionOption,nameUser, user):
     if (actionOption == 'View'):
 
         fruits = []
+        file = open("data.txt", "w")
         all_user = db.child("users").child(nameUser).get()
         # print(all_user.key())
         dictKey = all_user.val()
+        #
         print(dictKey) #prints out the whole key value dict
         for k, v in dictKey.items():
             #print ('  {}'.format( v))
             for ke, va in v.items():
-                print( '{} : {}'.format(ke, va))
+                contentHolder = ( '\n{} : {}\n'.format(ke, va))
                 fruits.append(va)
-            print ('------------------------')
+                print(contentHolder)
+                file.write(contentHolder)
+            lineDivider = ('------------------------')
+            print(lineDivider)
+            file.write(lineDivider)
+
+        file.close()
+
+
+        responseEmailHolder = input ("Would you like an email of your expenses: Y/N\n")
+        if (responseEmailHolder == ('Y' or 'y')):
+            MY_ADDRESS = "mail.expenseTracker@gmail.com"
+            PASSWORD = "test123*"
+            email = input ("Please enter your email address!\n")
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(MY_ADDRESS, PASSWORD)
+
+            msg = "Your expense report...\n" + openFile() + "\nThank you for using expenseTracker!!\n"
+            server.sendmail(MY_ADDRESS, email, msg)
+            server.quit()
+            print("Email sent!! Please check your email address!!")
         responseHolderfun(actionOption, nameUser, user)
 
     if (actionOption == 'Update'):
