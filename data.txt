@@ -143,3 +143,19 @@ ExpenseType : Coffee
 
 notesIfAny : Coffee bags
 ------------------------
+Date : 5/4/2018
+
+ExpensePrice : 10
+
+ExpenseType : Sticky Notes
+
+notesIfAny : For general
+------------------------
+Date : 5/4/2018
+
+ExpensePrice : 10
+
+ExpenseType : Cups
+
+notesIfAny : Coffee cups
+------------------------
