@@ -96,6 +96,11 @@ def checkOptionEntered(actionOption,nameUser, user):
 
     if (actionOption == 'Logout'):
         print ("Bye....... see you soon! :) ")
+        exit()
+
+    else:
+        print("Retype your entry!!")
+        letUserIn(user)
 
 
 
@@ -133,19 +138,39 @@ def menuHandler(optionsList):
     if (optionsHolder == "Login"):
         email = emailEntry()
         password = passwordEntry()
-        user = auth.sign_in_with_email_and_password(email, password)
-        letUserIn(user)
+        try:
+            user = auth.sign_in_with_email_and_password(email, password)
+            print ('Login Successful')
+            letUserIn(user)
+        except:
+            print ('Login Unsuccessful, please check your credentials!')
 
     elif (optionsHolder == "SignUp"):
         email = emailEntry()
         password = passwordEntry()
-        user = auth.create_user_with_email_and_password(email, password)
-        print('Please verify your email & then get started by running python3 app.py Login')
+        try:
+            print ("Creating a new account!")
+            user = auth.create_user_with_email_and_password(email, password)
+            print ('Account Created')
+            letUserIn(user)
+        except:
+            print ('User already exists, please check your credentials!')
+
+        # try:
+        #     user = auth.create_user_with_email_and_password(email, password)
+        #     status = 'success'
+        #     print('Please verify your email & then get started by running python3 app.py Login')
+        # except:
+        #     status = 'this user is already registered'
 
     elif (optionsHolder == "ForgotPassword"):
-        email = input("Please enter your email \n")
-        user = auth.send_password_reset_email(email)
-        print("Check your email!")
+        try:
+            email = input("Please enter your email \n")
+            user = auth.send_password_reset_email(email)
+            print("Check your email!")
+        except:
+            print('Wrong email, please check your credentials!')
+
 
 if __name__ == "__main__":
 

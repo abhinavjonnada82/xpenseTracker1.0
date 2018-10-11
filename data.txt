@@ -1,9 +1,145 @@
 
-Date : 5/4/2018
+Date : 5/5/2018
 
-ExpensePrice : 500
+ExpensePrice : 45
 
-ExpenseType : Cello
+ExpenseType : food
 
-notesIfAny : Orchestra
+notesIfAny : no
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 45
+
+ExpenseType : fodd
+
+notesIfAny : jo
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 12
+
+ExpenseType : Car wash
+
+notesIfAny : chill
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 4
+
+ExpenseType : Chocolate
+
+notesIfAny : Hershey's
+------------------------
+Date : 5/3/2019
+
+ExpensePrice : 25
+
+ExpenseType : Alexa
+
+notesIfAny : Personal Assistant
+------------------------
+Date : 4/6/2019
+
+ExpensePrice : 50
+
+ExpenseType : Watch
+
+notesIfAny : FitBit
+------------------------
+Date : 9.5.2019
+
+ExpensePrice : 20
+
+ExpenseType : Tupperware
+
+notesIfAny : Lunch Boxes
+------------------------
+Date : 5/4/2019
+
+ExpensePrice : 3
+
+ExpenseType : Fidget Spinner
+
+notesIfAny : Casual
+------------------------
+Date : 5/5/2019
+
+ExpensePrice : 45
+
+ExpenseType : Chapstick
+
+notesIfAny : j
+------------------------
+Date : 4/2/2018
+
+ExpensePrice : 10
+
+ExpenseType : Batteries
+
+notesIfAny : General
+------------------------
+Date : 4/4/2018
+
+ExpensePrice : 5
+
+ExpenseType : Water
+
+notesIfAny : casual
+------------------------
+Date : 5/6/2019
+
+ExpensePrice : 4
+
+ExpenseType : Pig toy
+
+notesIfAny : Show case
+------------------------
+Date : 5/6/2018
+
+ExpensePrice : 4
+
+ExpenseType : Coffe
+
+notesIfAny : Breakfast
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 3
+
+ExpenseType : Magnets
+
+notesIfAny : Fridge magnets
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 10
+
+ExpenseType : Sala
+
+notesIfAny : Chipotle
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 10
+
+ExpenseType : Fish
+
+notesIfAny : Salmon
+------------------------
+Date : 5/5/2018
+
+ExpensePrice : 45
+
+ExpenseType : Chicken 
+
+notesIfAny : Whole Organic Chicken
+------------------------
+Date : 4/5/2018
+
+ExpensePrice : 34
+
+ExpenseType : Coffee
+
+notesIfAny : Coffee bags
 ------------------------
