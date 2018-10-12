@@ -1,7 +1,8 @@
 # xpenseTracker1.0
 
-run -> python3 app.py -p Login or python3 app.py -p SignUp 
-You can use Test Login: test@test123 | Password: test123
+git clone repository 
+run -> python3 app.py -p Login (You can use Test Login: test@test123 | Password: test123)
+run -> or python3 app.py -p SignUp (Create new user)
 
 To check Progress: https://trello.com/b/kZXWRU2Y/xpensetracker-10
 
@@ -28,6 +29,8 @@ So how do I jump past the unique random number stamp and extract expensePrice ke
 ![firebasedb](https://user-images.githubusercontent.com/30497847/46894471-42dced00-ce3a-11e8-88b6-1cbfa80927f5.PNG)
 
 2.a Issues with Dockerfile and PIP version
+
+3.a Script sends a text message to only my number, I'm using a trial version of Twilio...
 
 If above 1.a issue is fixed then Update, Delete functionality can be easily implemented
 If 2.a issues is fixed, Docker image can built
