@@ -159,3 +159,43 @@ ExpenseType : Cups
 
 notesIfAny : Coffee cups
 ------------------------
+Date : 6/7/2018
+
+ExpensePrice : 8
+
+ExpenseType : Kombucha
+
+notesIfAny : Drink
+------------------------
+Date : 05.06.2018
+
+ExpensePrice : 45
+
+ExpenseType : Water
+
+notesIfAny : Na
+------------------------
+Date : 5/4/2018
+
+ExpensePrice : 200
+
+ExpenseType : LED TV
+
+notesIfAny : Was on SalE!!!
+------------------------
+Date : 5/4/2018
+
+ExpensePrice : 20
+
+ExpenseType : LED Monitor
+
+notesIfAny : Broken Monitor for testing
+------------------------
+Date : 4/3/2018
+
+ExpensePrice : 10
+
+ExpenseType : VGA Cord
+
+notesIfAny : for monitor
+------------------------

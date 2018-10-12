@@ -3,6 +3,10 @@ import pyrebase
 import argparse
 import smtplib
 import sys
+from twilio.rest import Client
+import socket
+import datetime
+
 
 config = {
     "apiKey": "AIzaSyBNn3_RxQr_B2ZvsvxZuMRAuaSoI0__HUg",
@@ -13,9 +17,14 @@ config = {
     "messagingSenderId": "59552663723"
   };
 
+# account_sid = 'AC29fbf392a271a38e6e3172bdef459cab'
+# auth_token = '778cb9ee4aaa654a412c18552a11dd66'
+# client = Client(account_sid, auth_token)
+
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
+storage = firebase.storage()
 
 class HelperBase():
     def __init__(self, para):
@@ -68,9 +77,9 @@ class CrudInAction(CrudBase):
     def checkOptionEntered(self, actionOption, nameUser, user):
 
         if (actionOption == 'Add'):
-            expenseDate = input("Enter Date: \n")
-            expenseReason = input("Enter your expense: \n")
-            expenseprice = input("Enter Price: $ \n")
+            expenseDate = input("Enter Date): \n")
+            expenseReason = input("Enter your expense : \n")
+            expenseprice = input("Enter Price:  $ \n")
             expensenotes = input("Enter any notes: \n")
 
             data = {
@@ -85,18 +94,13 @@ class CrudInAction(CrudBase):
 
         if (actionOption == 'View'):
 
-            fruits = []
             file = open("data.txt", "w")
             all_user = db.child("users").child(nameUser).get()
-            # print(all_user.key())
             dictKey = all_user.val()
-            #
-            print(dictKey) #prints out the whole key value dict
+
             for k, v in dictKey.items():
-                #print ('  {}'.format( v))
                 for ke, va in v.items():
                     contentHolder = ( '\n{} : {}\n'.format(ke, va))
-                    fruits.append(va)
                     print(contentHolder)
                     file.write(contentHolder)
                 lineDivider = ('------------------------')
@@ -107,6 +111,7 @@ class CrudInAction(CrudBase):
 
             responseEmailHolder = input ("Would you like an email of your expenses: Y/N\n")
             if (responseEmailHolder == ('Y' or 'y')):
+
                 emailCall = HelperBase("emailCall")
                 emailCall.callForEmail()
             responseCall = HelperBase("responseCall")
@@ -148,6 +153,21 @@ def letUserIn(user):
         crud = CrudInAction("crud")
         crud.checkOptionEntered(actionOption,nameUser, user)
 
+# def smsPhone(): #Only my number works for Twilio Free Trial sorry!!
+#     # ipLocation = socket.gethostbyname(socket.gethostname())
+#     # currentDT = datetime.datetime.now()
+#     # datePrint = print(currentDT.strftime("%Y-%m-%d %H:%M:%S"))
+#     # ipPrint = print(ipLocation)
+#     message = client.messages \
+#         .create(
+#         body=("Logged in from"),
+#         from_='+12019184251',
+#         menuPhone = MenuHandlerBase("menuPhone")
+#         menuPhone.phoneEntry()
+#
+#     )
+#     print(message.sid)
+
 class MenuAction(ABC):
     def __init__(self, par):
         self.par = par
@@ -158,6 +178,10 @@ class MenuAction(ABC):
 
     @abstractmethod
     def passwordEntry(self):
+        raise NotImplementedError("Subclass must implement this abstract method")
+
+    @abstractmethod
+    def phoneEntry(self):
         raise NotImplementedError("Subclass must implement this abstract method")
 
     @abstractmethod
@@ -177,18 +201,30 @@ class MenuHandlerBase(MenuAction):
         password = input("Please enter your password: \n")
         return password
 
-    def menuHandler(self, optionsList):
-        optionsHolder = optionsList.pop(0)
+    def phoneEntry(self):
+        phoneNum = input("Please enter your phone: \n")
+        return phoneNum
 
+    def menuHandler(self, optionsList):
+
+        optionsHolder = optionsList.pop(0)
         if (optionsHolder == "Login"):
             email = self.emailEntry()
             password = self.passwordEntry()
             try:
                 user = auth.sign_in_with_email_and_password(email, password)
                 print ('Login Successful')
+                # message = client.messages \
+                #     .create(
+                #     body="Login Successful.",
+                #     from_='+12019184251',
+                #     to=self.phoneEntry()
+                # )
+                # print(message.sid)
                 letUserIn(user)
+                sys.exit()
             except:
-                print ('Login Unsuccessful, please check your credentials!')
+                print ('Login Unsuccessful, please check your credentials=!')
 
         elif (optionsHolder == "SignUp"):
             email = self.emailEntry()
@@ -197,16 +233,18 @@ class MenuHandlerBase(MenuAction):
                 print ("Creating a new account!")
                 user = auth.create_user_with_email_and_password(email, password)
                 print ('Account Created')
+
+                # message = client.messages \
+                #     .create(
+                #     body="Login Successful.",
+                #     from_='+12019184251',
+                #     to=self.phoneEntry()
+                # )
+                # print(message.sid)
+
                 letUserIn(user)
             except:
                 print ('User already exists, please check your credentials!')
-
-            # try:
-            #     user = auth.create_user_with_email_and_password(email, password)
-            #     status = 'success'
-            #     print('Please verify your email & then get started by running python3 app.py Login')
-            # except:
-            #     status = 'this user is already registered'
 
         elif (optionsHolder == "ForgotPassword"):
             try:
