@@ -1,7 +1,10 @@
 # xpenseTracker1.0
 
 git clone repository 
+
 run -> python3 app.py -p Login (You can use Test Login: test@test123 | Password: test123)
+
+
 run -> or python3 app.py -p SignUp (Create new user)
 
 To check Progress: https://trello.com/b/kZXWRU2Y/xpensetracker-10
@@ -15,6 +18,9 @@ To check Progress: https://trello.com/b/kZXWRU2Y/xpensetracker-10
 ![44](https://user-images.githubusercontent.com/30497847/46894260-7e2aec00-ce39-11e8-934c-8aa1c6fbcf06.PNG)
 ![capture](https://user-images.githubusercontent.com/30497847/46894261-7e2aec00-ce39-11e8-9421-4c601ecb6468.PNG)
 ![capture1](https://user-images.githubusercontent.com/30497847/46894262-7e2aec00-ce39-11e8-90a0-7a3e5970b6fd.PNG)
+![mail](https://user-images.githubusercontent.com/30497847/46894832-753b1a00-ce3b-11e8-947a-5180774a46e1.PNG)
+![43685143_1765597320216495_3369230646315581440_n](https://user-images.githubusercontent.com/30497847/46894854-871cbd00-ce3b-11e8-9446-f07525ce6954.jpg)
+
 
 Following Yet to do:
 
