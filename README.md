@@ -2,7 +2,7 @@
 
 git clone repository 
 
-run -> python3 app.py -p Login (You can use Test Login: test@test123 | Password: test123)
+run -> python3 app.py -p Login (You can use Test Login: test@test.com | Password: test123)
 
 
 run -> or python3 app.py -p SignUp (Create new user)
