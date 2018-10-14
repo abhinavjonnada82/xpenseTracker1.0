@@ -1,5 +1,8 @@
 # xpenseTracker1.0
 
+Gives user an overview of expenses and has CRUD functions, Docker , Email , Twilio & Firebase auth integration.
+Built using Python & Firebase DB
+
 git clone repository 
 
 run -> python3 app.py -p Login (You can use Test Login: test@test.com | Password: test123)
